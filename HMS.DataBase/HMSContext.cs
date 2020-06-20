@@ -1,4 +1,5 @@
 ﻿using HMS.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,17 +9,20 @@ using System.Threading.Tasks;
 
 namespace HMS.DataBase
 {
-    public class HMSContext : DbContext
+    public class HMSContext : IdentityDbContext<HMSUser>
     {
         public HMSContext() :base("HMSConnectionString")
         {
 
+        }
+        public static HMSContext Create()
+        {
+            return new HMSContext();
         }
 
         public DbSet<AccomodationType> AccomodationType { get; set; }
         public DbSet<AccomodationPackage> AccomodationPackage { get; set; }
         public DbSet<Accomodation> Accomodation { get; set; }
         public DbSet<Booking> Booking { get; set; }
-
     }
 }

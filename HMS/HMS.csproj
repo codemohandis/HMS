@@ -174,7 +174,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -251,6 +250,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HMS.DataBase\HMS.DataBase.csproj">
+      <Project>{F2E68091-8D64-4212-BDD2-AB8DB8B6F81B}</Project>
+      <Name>HMS.DataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HMS.Entities\HMS.Entities.csproj">
+      <Project>{9CA7EEC1-3521-4F41-995E-9573C5687837}</Project>
+      <Name>HMS.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
