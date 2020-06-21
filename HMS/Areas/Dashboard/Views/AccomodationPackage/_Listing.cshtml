@@ -6,9 +6,7 @@
         <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">No Of Room</th>
-                <th scope="col">Fee Per Night</th>
-                <th scope="col">Action</th>
+                <th scope="col">Accomodation Type</th>
             </tr>
         </thead>
         <tbody>
@@ -16,8 +14,13 @@
             {
             <tr>
                 <td>@accomodationPackage.Name</td>
-                <td>@accomodationPackage.NoOfRoom</td>
-                <td>@accomodationPackage.FeePerNight</td>
+                <td>
+                    @if (accomodationPackage.AccomodationType != null)
+                    {
+                        @accomodationPackage.AccomodationType.Name
+                    }
+                </td>
+
                 <td>
                     <button data-href="@Url.Action("Action","AccomodationPackage",new { ID = accomodationPackage.ID})"
                             type="button" class="data-btn btn btn-md btn-success" data-toggle="modal" data-target="#actionModal">

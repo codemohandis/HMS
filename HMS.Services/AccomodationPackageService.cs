@@ -18,9 +18,10 @@ namespace HMS.Services
         }
         public AccomodationPackage GetAccomodationPackagesByID(int ID)
         {
-            var context = new HMSContext();
-            return context.AccomodationPackage.Find(ID);
-
+            using (var context = new HMSContext())
+            {
+                return context.AccomodationPackage.Find(ID);
+            }
         }
         public IEnumerable<AccomodationPackage> SearchAccomodationPackage(string searchTerm)
         {

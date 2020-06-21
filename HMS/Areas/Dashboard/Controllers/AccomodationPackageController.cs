@@ -12,6 +12,7 @@ namespace HMS.Areas.Dashboard.Controllers
     public class AccomodationPackageController : Controller
     {
         AccomodationPackageService accomodationPackageService = new AccomodationPackageService();
+        AccomodationTypeService accomodationTypeService = new AccomodationTypeService();
         public ActionResult Index(string searchTerm)
         {
             AccomodationPackageListingModel model = new AccomodationPackageListingModel();
@@ -34,10 +35,12 @@ namespace HMS.Areas.Dashboard.Controllers
             {
                 var accomodationPackage = accomodationPackageService.GetAccomodationPackagesByID(ID.Value);
                 model.ID = accomodationPackage.ID;
+                model.AccomodationTypeID = accomodationPackage.AccomodationTypeID;
                 model.Name = accomodationPackage.Name;
                 model.NoOfRoom = accomodationPackage.NoOfRoom;
                 model.FeePerNight = accomodationPackage.FeePerNight;
             }
+            model.AccomodationTypes = accomodationTypeService.GetAllAccomodationTypes();
             return PartialView("_Action", model);
         }
 
@@ -50,18 +53,22 @@ namespace HMS.Areas.Dashboard.Controllers
             if (model.ID > 0)//Edit
             {
                 var accomodationPackage = accomodationPackageService.GetAccomodationPackagesByID(model.ID);
+                accomodationPackage.AccomodationTypeID = model.AccomodationTypeID;
                 accomodationPackage.Name = model.Name;
                 accomodationPackage.NoOfRoom = model.NoOfRoom;
                 accomodationPackage.FeePerNight = model.FeePerNight;
+
                 result = accomodationPackageService.UpdateAccomodationPackage(accomodationPackage);
 
             }
             else//Add/Create
             {
                 AccomodationPackage accomodationPackage = new AccomodationPackage();
+                accomodationPackage.AccomodationTypeID = model.AccomodationTypeID;
                 accomodationPackage.Name = model.Name;
                 accomodationPackage.NoOfRoom = model.NoOfRoom;
                 accomodationPackage.FeePerNight = model.FeePerNight;
+
                 result = accomodationPackageService.SaveAccomodationPackage(accomodationPackage);
             }
 
