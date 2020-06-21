@@ -13,7 +13,7 @@ namespace HMS.Services
         public IEnumerable<AccomodationType> GetAllAccomodationTypes()
         {
             var context = new HMSContext();
-            return context.AccomodationType.AsEnumerable();
+            return context.AccomodationType.ToList();
 
         }
         public AccomodationType GetAccomodationTypesByID(int ID)
@@ -21,6 +21,16 @@ namespace HMS.Services
             var context = new HMSContext();
             return context.AccomodationType.Find(ID);
 
+        }
+        public IEnumerable<AccomodationType> SearchAccomodationType(string searchTerm)
+        {
+            var context = new HMSContext();
+            var accomodationType = context.AccomodationType.AsQueryable();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                accomodationType = accomodationType.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+            return accomodationType.ToList();
         }
         public bool SaveAccomodationType(AccomodationType accomodationType)
         {

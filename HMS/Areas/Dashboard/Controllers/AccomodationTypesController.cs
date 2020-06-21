@@ -12,9 +12,12 @@ namespace HMS.Areas.Dashboard.Controllers
     public class AccomodationTypesController : Controller
     {
         AccomodationTypeService accomodationTypeService = new AccomodationTypeService();
-        public ActionResult Index()
+        public ActionResult Index(string searchTerm)
         {
-            return View();
+            AccomodationTypesListingModel model = new AccomodationTypesListingModel();
+            model.SearchTerm = searchTerm;
+            model.AccomodationType = accomodationTypeService.SearchAccomodationType(searchTerm);
+            return View(model);
         }
         /// <summary>
         /// use Action For Create and Update Action
@@ -25,7 +28,7 @@ namespace HMS.Areas.Dashboard.Controllers
         [HttpGet]
         public ActionResult Action(int? ID)
         {
-            AccomodationTypesActonModel model = new AccomodationTypesActonModel();
+            AccomodationTypesActionModel model = new AccomodationTypesActionModel();
 
             if (ID.HasValue)//We are trying to edit a Record
             {
@@ -39,7 +42,7 @@ namespace HMS.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
-        public JsonResult Action(AccomodationTypesActonModel model)
+        public JsonResult Action(AccomodationTypesActionModel model)
         {
             JsonResult jsonResult =new JsonResult();
             var result = false;
@@ -74,13 +77,13 @@ namespace HMS.Areas.Dashboard.Controllers
         [HttpGet]
         public ActionResult Delete(int ID)
         {
-           AccomodationTypesActonModel model = new AccomodationTypesActonModel();
+           AccomodationTypesActionModel model = new AccomodationTypesActionModel();
            var accomodationType = accomodationTypeService.GetAccomodationTypesByID(ID);
            model.ID = accomodationType.ID;
            return PartialView("_Delete", model);
         }
         [HttpPost]
-        public JsonResult Delete(AccomodationTypesActonModel model)
+        public JsonResult Delete(AccomodationTypesActionModel model)
         {
            JsonResult jsonResult = new JsonResult();
            var result = false;
@@ -96,12 +99,6 @@ namespace HMS.Areas.Dashboard.Controllers
                 jsonResult.Data = new { Success = false, Message = "Unable to Perform Action On Accomodation Type" };
             }
             return jsonResult;
-        }
-        public ActionResult Listing()
-        {
-            AccomodationTypesListingModel modal = new AccomodationTypesListingModel();
-            modal.AccomodationType = accomodationTypeService.GetAllAccomodationTypes();
-            return PartialView("_Listing", modal);
         }
     }
 }
