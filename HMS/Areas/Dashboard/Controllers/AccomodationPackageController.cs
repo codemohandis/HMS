@@ -1,4 +1,5 @@
 ﻿using HMS.Areas.Dashboard.ViewModel;
+using HMS.Areas.Dashboard.ViewModels;
 using HMS.Entities;
 using HMS.Services;
 using System;
@@ -13,11 +14,17 @@ namespace HMS.Areas.Dashboard.Controllers
     {
         AccomodationPackageService accomodationPackageService = new AccomodationPackageService();
         AccomodationTypeService accomodationTypeService = new AccomodationTypeService();
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string searchTerm,int? accomdationTypeID,int page = 1)
         {
+            int recordSize = 3;
+//            page = page ?? 1;
             AccomodationPackageListingModel model = new AccomodationPackageListingModel();
             model.SearchTerm = searchTerm;
-            model.AccomodationPackage = accomodationPackageService.SearchAccomodationPackage(searchTerm);
+            model.AccomdationTypeID = accomdationTypeID;
+            model.AccomodationType = accomodationTypeService.GetAllAccomodationTypes();
+            model.AccomodationPackage = accomodationPackageService.SearchAccomodationPackage(searchTerm, accomdationTypeID,page,recordSize);
+            var totalRecord = accomodationPackageService.SearchAccomodationPackageCount(searchTerm, accomdationTypeID);
+            model.Pager = new Pager(totalRecord, page,recordSize);
             return View(model);
         }
         /// <summary>
