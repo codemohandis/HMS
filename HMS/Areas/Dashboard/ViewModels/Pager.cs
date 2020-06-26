@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HMS.Areas.Dashboard.ViewModels
+namespace HMS.Areas.Dashboard.ViewModel
 {
     /// <summary>
     /// https://jasonwatmore.com/post/2015/10/30/aspnet-mvc-pagination-example-with-logic-like-google

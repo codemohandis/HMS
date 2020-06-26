@@ -1,0 +1,68 @@
+﻿@model HMS.Areas.Dashboard.ViewModel.AccomodationListingModel
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row">
+    <div class="col col-lg-12">
+        <h2>Accomodation</h2>
+        <hr />
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col col-lg-12 col-xs-6">
+        <form>
+            <div class="input-group">
+                <input type="text" name="searchTerm" class="form-control" placeholder="Search" value="@Model.SearchTerm">
+                @if (Model.AccomodationPackage != null && Model.AccomodationPackage.Count() > 0)
+                {
+                    <select name="AccomodationPackageID" class="form-control">
+                        <option value="0">Select Type</option>
+                        @foreach (var accomdationPackage in Model.AccomodationPackage)
+                        {
+                            <option value="@accomdationPackage.ID" @(accomdationPackage.ID == Model.AccomodationPackageID ? "selected" : string.Empty)>
+                                @accomdationPackage.Name
+                            </option>
+                        }
+                    </select>
+                }
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="fas fa-search mr-1"></i> Search
+                    </button>
+
+                    <a href="@Url.Action("Index","Accomodations")" class="btn btn-outline-secondary">
+                        <i class="fas fa-redo-alt mr-1"></i> Reset
+                    </a>
+                    <button data-href="@Url.Action("Action","Accomodations")"
+                            id="CreateButton" class="data-btn btn btn-outline-success" type="button" data-toggle="modal" data-target="#actionModal">
+                        <i class="fas fa-plus mr-1"></i>Create
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class=" col col-lg-12">
+        @{ Html.RenderPartial("_Listing", Model);}
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+
+    </div>
+</div>
+
+<script>
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr('data-href'),
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            })
+    });
+</script>

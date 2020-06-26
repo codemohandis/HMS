@@ -1,4 +1,4 @@
-﻿using HMS.Areas.Dashboard.ViewModels;
+﻿using HMS.Areas.Dashboard.ViewModel;
 using HMS.Entities;
 using System;
 using System.Collections.Generic;

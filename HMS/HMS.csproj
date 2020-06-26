@@ -168,9 +168,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccomodationPackageController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\AccomodationsController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccomodationTypesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\UsersController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\AccomodationModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\AccomodationPackageModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\AccomodationTypeModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\Pager.cs" />
@@ -236,6 +239,10 @@
     <Content Include="Areas\Dashboard\Views\AccomodationPackage\_Action.cshtml" />
     <Content Include="Areas\Dashboard\Views\AccomodationPackage\_Listing.cshtml" />
     <Content Include="Areas\Dashboard\Views\AccomodationPackage\_Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Accomodations\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Accomodations\_Action.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Accomodations\_Listing.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Accomodations\_Delete.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -287,6 +294,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
+    <Folder Include="Areas\Dashboard\Views\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

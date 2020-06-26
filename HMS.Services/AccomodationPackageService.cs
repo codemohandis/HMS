@@ -41,7 +41,6 @@ namespace HMS.Services
             var skip = (page - 1) * recordSize;
             return accomodationPackage.OrderBy(x=>x.AccomodationTypeID).Skip(skip).Take(recordSize).ToList();
         }
-
         public int SearchAccomodationPackageCount(string searchTerm, int? AccomdationTypeID)
         {
             var context = new HMSContext();
@@ -56,7 +55,6 @@ namespace HMS.Services
             }
                return accomodationPackage.Count();
         }
-
         public bool SaveAccomodationPackage(AccomodationPackage accomodationPackage)
         {
             var context = new HMSContext();
