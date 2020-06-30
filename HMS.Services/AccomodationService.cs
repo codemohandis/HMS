@@ -43,7 +43,7 @@ namespace HMS.Services
             return accomodation.OrderBy(x => x.AccomodationPackageID).Skip(skip).Take(recordSize).ToList();
         }
 
-        public int SearchAccomodationCount(string searchTerm, int? AccomdationTypeID)
+        public int AccomodationCount(string searchTerm, int? AccomdationTypeID)
         {
             var context = new HMSContext();
             var accomodation = context.Accomodation.AsQueryable();

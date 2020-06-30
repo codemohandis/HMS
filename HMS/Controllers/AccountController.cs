@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using HMS.Entities;
 using HMS.Models;
+using HMS.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -16,24 +17,24 @@ namespace HMS.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private HMSSignInManager _signInManager;
+        private HMSUserManager _userManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(HMSUserManager userManager, HMSSignInManager signInManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
-        public ApplicationSignInManager SignInManager
+        public HMSSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager ?? HttpContext.GetOwinContext().Get<HMSSignInManager>();
             }
             private set
             {
@@ -41,12 +42,13 @@ namespace HMS.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public HMSUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<HMSUserManager>();
             }
+
             private set
             {
                 _userManager = value;

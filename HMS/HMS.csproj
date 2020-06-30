@@ -171,12 +171,14 @@
     <Compile Include="Areas\Dashboard\Controllers\AccomodationsController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccomodationTypesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\RolesController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\UsersController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\AccomodationModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\AccomodationPackageModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\AccomodationTypeModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\Pager.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\UsersModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -243,6 +245,10 @@
     <Content Include="Areas\Dashboard\Views\Accomodations\_Action.cshtml" />
     <Content Include="Areas\Dashboard\Views\Accomodations\_Listing.cshtml" />
     <Content Include="Areas\Dashboard\Views\Accomodations\_Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Users\_Action.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Users\_Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Users\_Listing.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -293,8 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Dashboard\Models\" />
-    <Folder Include="Areas\Dashboard\Views\Users\" />
+    <Folder Include="Areas\Dashboard\Views\Roles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

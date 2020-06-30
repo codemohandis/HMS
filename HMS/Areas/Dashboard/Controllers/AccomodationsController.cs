@@ -23,7 +23,7 @@ namespace HMS.Areas.Dashboard.Controllers
             model.AccomodationPackageID = accomodationPackageID;
             model.AccomodationPackage = accomodationPackageService.GetAllAccomodationPackages();
             model.Accomodation = accomodationService.SearchAccomodation(searchTerm, accomodationPackageID, page, recordSize);
-            var totalRecord = accomodationService.SearchAccomodationCount(searchTerm, accomodationPackageID);
+            var totalRecord = accomodationService.AccomodationCount(searchTerm, accomodationPackageID);
             model.Pager = new Pager(totalRecord, page, recordSize);
             return View(model);
         }
