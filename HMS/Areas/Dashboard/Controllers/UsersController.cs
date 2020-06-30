@@ -52,9 +52,6 @@ namespace HMS.Areas.Dashboard.Controllers
             }
         }
 
-        AccomodationService accomodationService = new AccomodationService();
-        AccomodationPackageService accomodationPackageService = new AccomodationPackageService();
-
         public ActionResult Index(string searchTerm, string roleID, int page = 1)
         {
             int recordSize = 1;
@@ -157,30 +154,32 @@ namespace HMS.Areas.Dashboard.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(int ID)
+        public async Task<ActionResult> Delete(string ID)
         {
-            AccomodationActionModel model = new AccomodationActionModel();
-            var accomodation = accomodationService.GetAccomodationsByID(ID);
-            model.ID = accomodation.ID;
+            UsersActionModel model = new UsersActionModel();
+            var user = await UserManager.FindByIdAsync(ID);
+            model.ID = user.Id;
             return PartialView("_Delete", model);
         }
         [HttpPost]
-        public JsonResult Delete(AccomodationActionModel model)
+        public async Task<JsonResult> Delete(UsersActionModel model)
         {
             JsonResult jsonResult = new JsonResult();
-            var result = false;
-            var accomodation = accomodationService.GetAccomodationsByID(model.ID);
-            result = accomodationService.DeleteAccomodation(accomodation);
+            IdentityResult result = null;
 
-            if (result)
+            if (!string.IsNullOrEmpty(model.ID))// Delete
             {
-                jsonResult.Data = new { Success = true };
+                var user = await UserManager.FindByIdAsync(model.ID);
+                result = await UserManager.DeleteAsync(user);
+                jsonResult.Data = new { Success = result.Succeeded, Message = string.Join(", ", result.Errors) };
             }
             else
             {
-                jsonResult.Data = new { Success = false, Message = "Unable to Perform Action On Accomodation Package" };
+                jsonResult.Data = new { Success = false, Message = "No User found/ Invalid Users" };
             }
+
             return jsonResult;
         }
+
     }
 }

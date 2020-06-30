@@ -178,6 +178,7 @@
     <Compile Include="Areas\Dashboard\ViewModels\AccomodationPackageModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\AccomodationTypeModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\Pager.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\RolesModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\UsersModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
