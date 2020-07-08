@@ -12,13 +12,13 @@ namespace HMS.Entities
 /// <summary>
 ///  Identityuser handle the user registration stuff
 /// </summary>
-    public class HMSUser : IdentityUser
+    public class IdentityRoles : IdentityUser
     {
         public string FullName { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<HMSUser> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<IdentityRoles> manager)
             {
                 // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
                 var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

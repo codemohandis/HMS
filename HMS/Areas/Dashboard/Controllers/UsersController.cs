@@ -16,15 +16,32 @@ namespace HMS.Areas.Dashboard.Controllers
     {
         private HMSSignInManager _signInManager;
         private HMSUserManager _userManager;
+        private HMSRoleManager _roleManager;
+
 
         public UsersController()
         {
         }
 
-        public UsersController(HMSUserManager userManager, HMSSignInManager signInManager)
+        public UsersController(HMSUserManager userManager, HMSSignInManager signInManager,HMSRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            RoleManager = roleManager;
+
+        }
+
+        public HMSRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<HMSRoleManager>();
+            }
+
+            private set
+            {
+                _roleManager = value;
+            }
         }
 
         public HMSSignInManager SignInManager
@@ -59,14 +76,14 @@ namespace HMS.Areas.Dashboard.Controllers
             UsersListingModel model = new UsersListingModel();
             model.SearchTerm = searchTerm;
             model.RoleID = roleID;
-            //model.Role = accomodationPackageService.GetAllAccomodationPackages();
+            model.Roles = RoleManager.Roles.ToList();
             model.Users = SearchUsers(searchTerm, roleID, page, recordSize);
             var totalRecord = SearchUsersCount(searchTerm, roleID);//accomodationService.SearchAccomodationCount(searchTerm, roleID);
             model.Pager = new Pager(totalRecord, page, recordSize);
             return View(model);
         }
 
-        public IEnumerable<HMSUser> SearchUsers(string searchTerm, string roleID, int page, int recordSize)
+        public IEnumerable<IdentityRoles> SearchUsers(string searchTerm, string roleID, int page, int recordSize)
         {
             var users = UserManager.Users.AsQueryable();
             if (!string.IsNullOrEmpty(searchTerm))
@@ -140,7 +157,7 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             else//Add/Create
             {
-                var user = new HMSUser();
+                var user = new IdentityRoles();
                 //user.Id = model.ID;
                 user.FullName = model.FullName;
                 user.Email = model.Email;
@@ -179,6 +196,56 @@ namespace HMS.Areas.Dashboard.Controllers
             }
 
             return jsonResult;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> UserRoles(string ID)
+        {
+            UsersRoleModel model = new UsersRoleModel();
+            model.UserID = ID;
+            //Find  user using userId
+            var user = await UserManager.FindByIdAsync(ID);
+            // is user k against jitny role hain unki Ids select kr rha hai
+            var userRoleIDs = user.Roles.Select(x => x.RoleId).ToList();
+            // phr yahan jo role user ko deye huwy hain unko total role say match krwa kr return kar rha hai
+            model.UserRoles = RoleManager.Roles.Where(x => userRoleIDs.Contains(x.Id)).ToList();
+
+            model.Roles = RoleManager.Roles.Where(x=>!userRoleIDs.Contains(x.Id)).ToList();
+            return PartialView("_UserRoles", model);
+        }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="operation">Type of operation to perform e.g: Assign or Delete</param>
+        /// <param name="userID"></param>
+        /// <param name="roleID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<JsonResult> UserRoleOperation(string userID,string roleID, bool isDelete = false)
+        {
+            JsonResult json = new JsonResult();
+            var user =await UserManager.FindByIdAsync(userID);
+            var role = await RoleManager.FindByIdAsync(roleID);
+            if (user !=null && role!=null)
+            {
+                IdentityResult result = null;
+                if (!isDelete)
+                {
+                    //UserId And role Name Parameter
+                     result = await UserManager.AddToRoleAsync(userID, role.Name);
+                }
+                else
+               {
+                     result = await UserManager.RemoveFromRolesAsync(userID, role.Name);
+
+                }
+                json.Data = new { Success = result.Succeeded, Message = string.Join(",", result.Errors) };
+            }
+            else
+            {
+                json.Data = new { Success = false, Message = "Invalid Operations" };
+            }
+            return json;
         }
 
     }

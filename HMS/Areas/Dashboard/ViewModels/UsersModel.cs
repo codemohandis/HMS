@@ -10,7 +10,7 @@ namespace HMS.Areas.Dashboard.ViewModel
 {
     public class UsersListingModel
     {
-        public IEnumerable<HMSUser> Users { get; set; }
+        public IEnumerable<IdentityRoles> Users { get; set; }
         public string RoleID { get; set; }
         public IEnumerable<IdentityRole> Roles { get; set; }
         public string SearchTerm { get; set; }
@@ -30,6 +30,12 @@ namespace HMS.Areas.Dashboard.ViewModel
         public string roleID { get; set; }
         public IdentityRole Role { get; set; }
 
+        public IEnumerable<IdentityRole> Roles { get; set; }
+    }
+    public class UsersRoleModel
+    {
+        public string  UserID { get; set; }
+        public IEnumerable<IdentityRole> UserRoles { get; set; }
         public IEnumerable<IdentityRole> Roles { get; set; }
     }
 }

@@ -16,7 +16,6 @@ namespace HMS.Areas.Dashboard.Controllers
         public ActionResult Index(string searchTerm,int? accomodationTypeID,int page = 1)
         {
             int recordSize = 3;
-//            page = page ?? 1;
             AccomodationPackageListingModel model = new AccomodationPackageListingModel();
             model.SearchTerm = searchTerm;
             model.AccomdationTypeID = accomodationTypeID;

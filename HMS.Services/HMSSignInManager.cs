@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace HMS.Services
 {
-    public class HMSSignInManager : SignInManager<HMSUser, string>
+    public class HMSSignInManager : SignInManager<IdentityRoles, string>
     {
         public HMSSignInManager(HMSUserManager userManager, IAuthenticationManager authenticationManager)
            : base(userManager, authenticationManager)
         {
         }
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(HMSUser user)
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(IdentityRoles user)
         {
             return user.GenerateUserIdentityAsync((HMSUserManager)UserManager);
         }
