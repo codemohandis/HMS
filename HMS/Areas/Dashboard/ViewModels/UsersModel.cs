@@ -10,7 +10,7 @@ namespace HMS.Areas.Dashboard.ViewModel
 {
     public class UsersListingModel
     {
-        public IEnumerable<IdentityRoles> Users { get; set; }
+        public IEnumerable<HMSUser> Users { get; set; }
         public string RoleID { get; set; }
         public IEnumerable<IdentityRole> Roles { get; set; }
         public string SearchTerm { get; set; }

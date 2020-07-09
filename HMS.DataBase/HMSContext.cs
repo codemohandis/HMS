@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HMS.DataBase
 {
-    public class HMSContext : IdentityDbContext<IdentityRoles>
+    public class HMSContext : IdentityDbContext<HMSUser>
     {
         public HMSContext() :base("HMSConnectionString")
         {

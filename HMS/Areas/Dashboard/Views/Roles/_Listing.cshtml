@@ -17,7 +17,11 @@
                 <tr>
                     <td>@role.Id</td>
                     <td>@role.Name</td>
-                    <td>@role.Users.Count</td>
+                    <td>
+                        <a href="@Url.Action("Index","Users",new { RoleID = role.Id})">
+                            @role.Users.Count
+                        </a>
+                    </td>
                     <td>
                         <button data-href="@Url.Action("Action","Roles",new { ID = role.Id})"
                                 type="button" class="data-btn btn btn-md btn-success" data-toggle="modal" data-target="#actionModal">

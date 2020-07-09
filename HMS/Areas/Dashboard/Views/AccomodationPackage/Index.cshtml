@@ -4,7 +4,7 @@
 }
 <div class="row">
     <div class="col col-lg-12">
-        <h2>Accomodation Types</h2>
+        <h2>Accomodation Package</h2>
         <hr />
     </div>
 </div>
@@ -16,7 +16,7 @@
                 <input type="text" name="searchTerm" class="form-control" placeholder="Search" value="@Model.SearchTerm">
                 @if (Model.AccomodationType != null && Model.AccomodationType.Count() > 0)
                 {
-                <select name="accomdationTypeID" class="form-control">
+                <select name="AccomdationTypeID" class="form-control">
                     <option value="0">Select Type</option>
                     @foreach (var accomdationType in Model.AccomodationType)
                     {

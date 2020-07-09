@@ -5,8 +5,10 @@
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">FullName</th>
                 <th scope="col">Email</th>
                 <th scope="col">Username</th>
+                <th scope="col">Role</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -14,8 +16,10 @@
             @foreach (var user in Model.Users)
             {
             <tr>
+                 <td>@user.FullName</td>
                 <td>@user.Email</td>
                 <td>@user.UserName</td>
+                <td>@user.Roles.Count</td>
                 <td>
                     <button data-href="@Url.Action("Action","Users",new { ID = user.Id})"
                             type="button" class="data-btn btn btn-md btn-success" data-toggle="modal" data-target="#actionModal">
@@ -27,7 +31,7 @@
                     </button>
                     <button data-href="@Url.Action("UserRoles","Users",new { ID = user.Id})"
                             type="button" class="data-btn btn btn-md btn-info" data-toggle="modal" data-target="#actionModal">
-                        <i class="fas fa-users-cog mr-1"></i>Roles
+                        <i class="fas fa-user-shield mr-1"></i>Roles
                     </button>
                 </td>
             </tr>

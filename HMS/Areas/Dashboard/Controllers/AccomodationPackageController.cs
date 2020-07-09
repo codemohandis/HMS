@@ -13,15 +13,15 @@ namespace HMS.Areas.Dashboard.Controllers
     {
         AccomodationPackageService accomodationPackageService = new AccomodationPackageService();
         AccomodationTypeService accomodationTypeService = new AccomodationTypeService();
-        public ActionResult Index(string searchTerm,int? accomodationTypeID,int page = 1)
+        public ActionResult Index(string searchTerm,int? AccomdationTypeID, int page = 1)
         {
             int recordSize = 3;
             AccomodationPackageListingModel model = new AccomodationPackageListingModel();
             model.SearchTerm = searchTerm;
-            model.AccomdationTypeID = accomodationTypeID;
+            model.AccomdationTypeID = AccomdationTypeID;
             model.AccomodationType = accomodationTypeService.GetAllAccomodationTypes();
-            model.AccomodationPackage = accomodationPackageService.SearchAccomodationPackage(searchTerm, accomodationTypeID,page,recordSize);
-            var totalRecord = accomodationPackageService.SearchAccomodationPackageCount(searchTerm, accomodationTypeID);
+            model.AccomodationPackage = accomodationPackageService.SearchAccomodationPackage(searchTerm, AccomdationTypeID, page,recordSize);
+            var totalRecord = accomodationPackageService.SearchAccomodationPackageCount(searchTerm, AccomdationTypeID);
             model.Pager = new Pager(totalRecord, page,recordSize);
             return View(model);
         }

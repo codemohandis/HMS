@@ -69,21 +69,21 @@ namespace HMS.Areas.Dashboard.Controllers
             }
         }
 
-        public ActionResult Index(string searchTerm, string roleID, int page = 1)
+        public async Task<ActionResult> Index(string searchTerm, string roleID, int page = 1)
         {
-            int recordSize = 1;
-            //            page = page ?? 1;
+            int recordSize = 5;
+            //page = page ?? 1;
             UsersListingModel model = new UsersListingModel();
             model.SearchTerm = searchTerm;
             model.RoleID = roleID;
             model.Roles = RoleManager.Roles.ToList();
-            model.Users = SearchUsers(searchTerm, roleID, page, recordSize);
-            var totalRecord = SearchUsersCount(searchTerm, roleID);//accomodationService.SearchAccomodationCount(searchTerm, roleID);
+            model.Users = await SearchUsers(searchTerm, roleID, page, recordSize);
+            var totalRecord = await SearchUsersCount(searchTerm, roleID);
             model.Pager = new Pager(totalRecord, page, recordSize);
             return View(model);
         }
 
-        public IEnumerable<IdentityRoles> SearchUsers(string searchTerm, string roleID, int page, int recordSize)
+        public async Task<IEnumerable<HMSUser>> SearchUsers(string searchTerm, string roleID, int page, int recordSize)
         {
             var users = UserManager.Users.AsQueryable();
             if (!string.IsNullOrEmpty(searchTerm))
@@ -92,16 +92,18 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             if (!string.IsNullOrEmpty(roleID))
             {
-            //    users = users.Where(x => x.Email.ToLower().Contains(searchTerm.ToLower()));
-            }
+                var role = await RoleManager.FindByIdAsync(roleID);
+                var userIDs = role.Users.Select(x => x.UserId).ToList();
+                users = users.Where(x => userIDs.Contains(x.Id));
 
-            //skip = 1-1 * 3 = 0
-            //skip = 2-1 * 3 = 3
-            //skip = 3-1 * 3 = 6
+            }
+                //skip = 1-1 * 3 = 0
+                //skip = 2-1 * 3 = 3
+                //skip = 3-1 * 3 = 6
             var skip = (page - 1) * recordSize;
             return users.OrderBy(x => x.Email).Skip(skip).Take(recordSize).ToList();
         }
-        public int SearchUsersCount(string searchTerm, string roleID)
+        public async Task<int> SearchUsersCount(string searchTerm, string roleID)
         {
             var users = UserManager.Users.AsQueryable();
             if (!string.IsNullOrEmpty(searchTerm))
@@ -110,7 +112,9 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             if (!string.IsNullOrEmpty(roleID))
             {
-                //    users = users.Where(x => x.Email.ToLower().Contains(searchTerm.ToLower()));
+                var role = await RoleManager.FindByIdAsync(roleID);
+                var userIDs = role.Users.Select(x => x.UserId).ToList();
+                users = users.Where(x => userIDs.Contains(x.Id));
             }
             return users.Count();
         }
@@ -157,7 +161,7 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             else//Add/Create
             {
-                var user = new IdentityRoles();
+                var user = new HMSUser();
                 //user.Id = model.ID;
                 user.FullName = model.FullName;
                 user.Email = model.Email;

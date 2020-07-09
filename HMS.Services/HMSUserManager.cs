@@ -12,18 +12,18 @@ using System.Threading.Tasks;
 
 namespace HMS.Services
 {
-    public class HMSUserManager :UserManager<IdentityRoles>
+    public class HMSUserManager :UserManager<HMSUser>
     {
-        public HMSUserManager(IUserStore<IdentityRoles> store)
+        public HMSUserManager(IUserStore<HMSUser> store)
            : base(store)
         {
         }
 
         public static HMSUserManager Create(IdentityFactoryOptions<HMSUserManager> options, IOwinContext context)
         {
-            var manager = new HMSUserManager(new UserStore<IdentityRoles>(context.Get<HMSContext>()));
+            var manager = new HMSUserManager(new UserStore<HMSUser>(context.Get<HMSContext>()));
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<IdentityRoles>(manager)
+            manager.UserValidator = new UserValidator<HMSUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -46,11 +46,11 @@ namespace HMS.Services
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<IdentityRoles>
+            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<HMSUser>
             {
                 MessageFormat = "Your security code is {0}"
             });
-            manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<IdentityRoles>
+            manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<HMSUser>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
@@ -60,7 +60,7 @@ namespace HMS.Services
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider =  new DataProtectorTokenProvider<IdentityRoles>(dataProtectionProvider.Create("ASP.NET Identity"));
+                manager.UserTokenProvider =  new DataProtectorTokenProvider<HMSUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
         }
