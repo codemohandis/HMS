@@ -17,11 +17,11 @@ namespace HMS.DataBase.Migrations
                         Description = c.String(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AccomodationPackages", t => t.AccomodationPackageID, cascadeDelete: true)
+                .ForeignKey("dbo.Accomodation", t => t.AccomodationPackageID, cascadeDelete: true)
                 .Index(t => t.AccomodationPackageID);
 
             CreateTable(
-                "dbo.AccomodationPackages",
+                "dbo.Accomodation",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
@@ -62,14 +62,14 @@ namespace HMS.DataBase.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Bookings", "AccomodationID", "dbo.Accomodations");
-            DropForeignKey("dbo.Accomodations", "AccomodationPackageID", "dbo.AccomodationPackages");
-            DropForeignKey("dbo.AccomodationPackages", "AccomodationTypeID", "dbo.AccomodationTypes");
+            DropForeignKey("dbo.Accomodations", "AccomodationPackageID", "dbo.Accomodation");
+            DropForeignKey("dbo.Accomodation", "AccomodationTypeID", "dbo.AccomodationTypes");
             DropIndex("dbo.Bookings", new[] { "AccomodationID" });
-            DropIndex("dbo.AccomodationPackages", new[] { "AccomodationTypeID" });
+            DropIndex("dbo.Accomodation", new[] { "AccomodationTypeID" });
             DropIndex("dbo.Accomodations", new[] { "AccomodationPackageID" });
             DropTable("dbo.Bookings");
             DropTable("dbo.AccomodationTypes");
-            DropTable("dbo.AccomodationPackages");
+            DropTable("dbo.Accomodation");
             DropTable("dbo.Accomodations");
         }
     }

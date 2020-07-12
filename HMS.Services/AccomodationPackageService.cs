@@ -16,6 +16,12 @@ namespace HMS.Services
             return context.AccomodationPackage.ToList();
 
         }
+        public IEnumerable<AccomodationPackage> GetAllAccomodationPackagesByAccomodationType(int accomodationTypeID)
+        {
+            var context = new HMSContext();
+            return context.AccomodationPackage.Where(x => x.AccomodationTypeID == accomodationTypeID).ToList();
+
+        }
         public AccomodationPackage GetAccomodationPackagesByID(int ID)
         {
             using (var context = new HMSContext())

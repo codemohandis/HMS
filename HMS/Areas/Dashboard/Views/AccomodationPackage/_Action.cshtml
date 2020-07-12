@@ -24,11 +24,11 @@
                 <div class="form-group">
                     <label>Accomodation Type</label>
                     <select name="AccomodationTypeID" class="form-control">
-                        @if(Model.AccomodationTypes != null)
+                        @if (Model.AccomodationTypes != null)
                         {
                             foreach (var accomodationType in Model.AccomodationTypes)
                             {
-                                <option value="@accomodationType.ID" @(accomodationType.ID == Model.AccomodationTypeID ? "selected":string.Empty)>
+                                <option value="@accomodationType.ID" @(accomodationType.ID == Model.AccomodationTypeID ? "selected" : string.Empty)>
                                     @accomodationType.Name
                                 </option>
                             }
@@ -49,6 +49,11 @@
                 <div class="form-group">
                     <label>FeePerNight</label>
                     <input name="FeePerNight" class="form-control" placeholder="Fee Per Night" value="@Model.FeePerNight">
+                </div>
+
+                <div class="form-group">
+                    <label>Pictures</label>
+                    <input id="selectPictures" type="file" class="form-control-file" name="Pictures"  multiple>
                 </div>
                 <div class="errorDiv"></div>
             </form>
@@ -78,6 +83,23 @@
                     $("#errorDiv").html(response.Message);
                 }
                     $("#actionModal .modal-dialog").html(response);
+            })
+    });
+    $("#selectPictures").change(function () {
+        var pictures = this.files;
+        var formData = new FormData();
+        for (var i = 0; i < pictures.length; i++) {
+            formData.append("Pictures", pictures[i]);
+        }
+        $.ajax({
+            type: 'Post',
+            url: '@Url.Action("UploadPictures", "Dashboard")',
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (response) {
+
             })
 
     });

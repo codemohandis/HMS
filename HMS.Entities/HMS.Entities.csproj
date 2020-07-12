@@ -56,9 +56,12 @@
   <ItemGroup>
     <Compile Include="Accomodation.cs" />
     <Compile Include="AccomodationPackage.cs" />
+    <Compile Include="AccomodationPackagePictures.cs" />
+    <Compile Include="AccomodationPictures.cs" />
     <Compile Include="AccomodationType.cs" />
     <Compile Include="Booking.cs" />
     <Compile Include="HMSUser.cs" />
+    <Compile Include="Pictures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
