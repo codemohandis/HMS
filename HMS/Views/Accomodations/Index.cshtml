@@ -24,6 +24,18 @@
     <div id="colorlib-rooms" class="colorlib-light-grey">
         <div class="container">
             <div class="row">
+                @*@if (Model.AccomodationPackages != null && Model.AccomodationPackages.Count() > 0)
+                {
+                    <select name="accomodationPackageID" class="form-control" id="AccomdationPackageID">
+                        <option value="0">Select Type</option>
+                        @foreach (var accomodationPackage in Model.AccomodationPackages)
+                        {
+                            <option value="@accomodationPackage.ID" @(accomodationPackage.ID == Model.SelectedAccomodationPackageID ? "selected" : string.Empty)>
+                                @accomodationPackage.Name
+                            </option>
+                        }
+                    </select>
+                }*@
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Select Accomodation Package

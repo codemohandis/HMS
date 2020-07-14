@@ -10,7 +10,7 @@ namespace HMS.Entities
     {
         public int ID { get; set; }
         public int AccomodationID { get; set; }
-        public Accomodation Accomodation { get; set; }
+        public virtual Accomodation Accomodation { get; set; }
 
         public DateTime FromDate { get; set; }
         /// <summary>

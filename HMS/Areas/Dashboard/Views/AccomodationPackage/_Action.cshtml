@@ -53,7 +53,17 @@
 
                 <div class="form-group">
                     <label>Pictures</label>
-                    <input id="selectPictures" type="file" class="form-control-file" name="Pictures"  multiple>
+                    <input id="selectPictures" type="file" class="form-control-file" name="Pictures" multiple>
+                    <input type="hidden" name="pictureIDs" id="pictureIDs" value="" />
+                </div>
+                <div id="pictureArea">
+                    @if (Model.AccomodationPackagePictures != null && Model.AccomodationPackagePictures.Count() > 0)
+                    {
+                        foreach (var accomodationPackagePicture in Model.AccomodationPackagePictures)
+                        {
+                            <img src="/Images/site/@accomodationPackagePicture.Picture.URL" alt="" class="img img-fluid" style="width:200px" onclick="removePicture(this)" data-id="@accomodationPackagePicture.PictureID" />
+                        }
+                    }
                 </div>
                 <div class="errorDiv"></div>
             </form>
@@ -67,8 +77,18 @@
         </div>
     </div>
 }
+    <div id="imageTemplate">
+        <img src="" alt="" class="img img-fluid" style="width:200px" onclick="removePicture(this)"/>
+    </div>
 <script>
-    $("#actionButton").click(function(){
+    $("#actionButton").click(function () {
+       //get all the ids of pictures which is in picture area
+        var pictureIDs = [];
+        $("#pictureArea img").each(function () {
+            var picIDs = $(this).attr("data-id");
+            pictureIDs.push(picIDs);
+        });
+        $("#pictureIDs").val(pictureIDs.join());
         $.ajax({
             type: 'Post',
             url: '@Url.Action("Action","AccomodationPackage")',
@@ -85,6 +105,7 @@
                     $("#actionModal .modal-dialog").html(response);
             })
     });
+
     $("#selectPictures").change(function () {
         var pictures = this.files;
         var formData = new FormData();
@@ -99,8 +120,17 @@
             contentType: false
         })
             .done(function (response) {
-
+                for (var i = 0; i < response.length; i++) {
+                    var picture = response[i];
+                    var $imgHTML = $("#imageTemplate").clone();
+                    $imgHTML.find("img").attr("src", "/Images/site/" + picture.URL);
+                    $imgHTML.find("img").attr("data-id", picture.ID);
+                    $("#pictureArea").append($imgHTML.html());
+                }
             })
 
     });
+    function removePicture(element){
+        element.remove();
+    }
 </script>

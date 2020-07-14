@@ -13,22 +13,20 @@
         <tbody>
             @foreach (var accomodationType in Model.AccomodationType)
             {
-                <tr>
-                    <td>@accomodationType.Name</td>
-                    <td>@accomodationType.Description</td>
-                    <td>
-                        <button
-                                data-href="@Url.Action("Action","AccomodationTypes",new { ID = accomodationType.ID})"
-                                type="button" class="data-btn btn btn-md btn-success" data-toggle="modal" data-target="#actionModal">
-                                <i class="fas fa-edit mr-1"></i>
-                        </button>
-                        <button
-                                data-href="@Url.Action("Delete","AccomodationTypes",new { ID = accomodationType.ID})"
-                                type="button" class="data-btn btn btn-md btn-danger" data-toggle="modal" data-target="#actionModal">
-                              <i class="fas fa-trash-alt mr-1"></i>
-                        </button>
-                    </td>
-                </tr>
+            <tr>
+                <td>@accomodationType.Name</td>
+                <td>@accomodationType.Description</td>
+                <td>
+                    <button data-href="@Url.Action("Action","AccomodationTypes",new { ID = accomodationType.ID})"
+                            type="button" class="data-btn btn btn-md btn-success" data-toggle="modal" data-target="#actionModal">
+                        <i class="fas fa-edit mr-1"></i>
+                    </button>
+                    <button data-href="@Url.Action("Delete","AccomodationTypes",new { ID = accomodationType.ID})"
+                            type="button" class="data-btn btn btn-md btn-danger" data-toggle="modal" data-target="#actionModal">
+                        <i class="fas fa-trash-alt mr-1"></i>
+                    </button>
+                </td>
+            </tr>
             }
 
         </tbody>

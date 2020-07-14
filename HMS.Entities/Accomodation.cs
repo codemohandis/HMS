@@ -13,7 +13,7 @@ namespace HMS.Entities
         public virtual AccomodationPackage AccomodationPackage { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<AccomodationPictures> AccomodationPictures { get; set; }
+        public virtual List<AccomodationPictures> AccomodationPictures { get; set; }
 
     }
 }

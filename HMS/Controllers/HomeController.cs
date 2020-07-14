@@ -14,7 +14,11 @@ namespace HMS.Controllers
         {
             HomeViewModel model = new HomeViewModel();
             AccomodationTypeService AccomodationTypeService = new AccomodationTypeService();
+            AccomodationPackageService accomodationPackageService = new AccomodationPackageService();
+
             model.AccommodationTypes = AccomodationTypeService.GetAllAccomodationTypes();
+            model.AccomodationPackages = accomodationPackageService.GetAllAccomodationPackages();
+
             return View(model);
         }
     }

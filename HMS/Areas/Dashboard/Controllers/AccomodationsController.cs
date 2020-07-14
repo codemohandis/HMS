@@ -1,4 +1,5 @@
 ﻿using HMS.Areas.Dashboard.ViewModel;
+using HMS.Code;
 using HMS.Entities;
 using HMS.Services;
 using System;
@@ -13,10 +14,10 @@ namespace HMS.Areas.Dashboard.Controllers
     {
         AccomodationService accomodationService = new AccomodationService();
         AccomodationPackageService accomodationPackageService = new AccomodationPackageService();
-
+        DashboardService dashboardService = new DashboardService();
         public ActionResult Index(string searchTerm, int? accomodationPackageID, int page = 1)
         {
-            int recordSize = 3;
+            int recordSize = Variables.NoOfRecordsPerPage;
             //            page = page ?? 1;
             AccomodationListingModel model = new AccomodationListingModel();
             model.SearchTerm = searchTerm;
@@ -45,8 +46,9 @@ namespace HMS.Areas.Dashboard.Controllers
                 model.AccomodationPackageID = accomodation.AccomodationPackageID;
                 model.Name = accomodation.Name;
                 model.Description = accomodation.Description;
+                model.AccomodationPictures = accomodationService.GetPicturesByAccomodationID(accomodation.ID);
             }
-           model.AccomodationPackages = accomodationPackageService.GetAllAccomodationPackages();
+            model.AccomodationPackages = accomodationPackageService.GetAllAccomodationPackages();
             return PartialView("_Action", model);
         }
 
@@ -55,7 +57,10 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             JsonResult jsonResult = new JsonResult();
             var result = false;
-
+            //model.pictureIDs  = "90","91","92"
+            //return list={90,91,92} if agar empty ho to empty list return karyga
+            List<int> pictureIDs = !string.IsNullOrEmpty(model.PictureIDs) ? model.PictureIDs.Split(',').Select(x => int.Parse(x)).ToList() : new List<int>();
+            var pictures = dashboardService.GetPictureByIDs(pictureIDs);
             if (model.ID > 0)//Edit
             {
                 var accomodation = accomodationService.GetAccomodationsByID(model.ID);
@@ -63,8 +68,9 @@ namespace HMS.Areas.Dashboard.Controllers
                 accomodation.Name = model.Name;
                 accomodation.Description = model.Description;
 
+                accomodation.AccomodationPictures.Clear();
+                accomodation.AccomodationPictures.AddRange(pictures.Select(x => new AccomodationPictures() { AccomodationID = accomodation.ID, PictureID = x.ID }));
                 result = accomodationService.UpdateAccomodation(accomodation);
-
             }
             else//Add/Create
             {
@@ -72,7 +78,8 @@ namespace HMS.Areas.Dashboard.Controllers
                 accomodation.AccomodationPackageID = model.AccomodationPackageID;
                 accomodation.Name = model.Name;
                 accomodation.Description = model.Description;
-
+                accomodation.AccomodationPictures = new List<AccomodationPictures>();
+                accomodation.AccomodationPictures.AddRange(pictures.Select(x => new AccomodationPictures() { PictureID = x.ID }));
                 result = accomodationService.SaveAccomodation(accomodation);
             }
 

@@ -25,10 +25,8 @@ namespace HMS.Services
         }
         public Accomodation GetAccomodationsByID(int ID)
         {
-            using (var context = new HMSContext())
-            {
-                return context.Accomodation.Find(ID);
-            }
+            var context = new HMSContext();
+               return context.Accomodation.Find(ID);
         }
         public IEnumerable<Accomodation> SearchAccomodation(string searchTerm, int? AccomdationPackageID, int page, int recordSize)
         {
@@ -63,7 +61,6 @@ namespace HMS.Services
             }
             return accomodation.Count();
         }
-
         public bool SaveAccomodation(Accomodation accomodation)
         {
             var context = new HMSContext();
@@ -73,7 +70,17 @@ namespace HMS.Services
         public bool UpdateAccomodation(Accomodation accomodation)
         {
             var context = new HMSContext();
-            context.Entry(accomodation).State = System.Data.Entity.EntityState.Modified;
+            //iskay krny Ki waaja ye hai ki context dispose horha tha q ki ham accomdationpkgid ko 2 jaga use kr rhy thy yani
+            //2 context mai to vo dusry ma akar dispose horha tha iswaja sy ye existingAccomodationPackage ka scene kia hai
+            //isky zareye phly accomodation find ki phr id sy phr update krdya mgr jo List hain unhen nahe
+            var existingAccomodation = context.Accomodation.Find(accomodation.ID);
+
+            context.AccomodationPictures.RemoveRange(existingAccomodation.AccomodationPictures);
+
+            context.Entry(existingAccomodation).CurrentValues.SetValues(accomodation);
+
+            context.AccomodationPictures.AddRange(accomodation.AccomodationPictures);
+
             return context.SaveChanges() > 0;
         }
         public bool DeleteAccomodation(Accomodation accomodation)
@@ -81,6 +88,11 @@ namespace HMS.Services
             var context = new HMSContext();
             context.Entry(accomodation).State = System.Data.Entity.EntityState.Deleted;
             return context.SaveChanges() > 0;
+        }
+        public List<AccomodationPictures> GetPicturesByAccomodationID(int accomodationID)
+        {
+            var context = new HMSContext();
+            return context.Accomodation.Find(accomodationID).AccomodationPictures.ToList();
         }
     }
 }

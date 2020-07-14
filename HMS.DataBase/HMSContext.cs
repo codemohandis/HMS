@@ -22,7 +22,10 @@ namespace HMS.DataBase
 
         public DbSet<AccomodationType> AccomodationType { get; set; }
         public DbSet<AccomodationPackage> AccomodationPackage { get; set; }
+        public DbSet<AccomodationPackagePictures> AccomodationPackagePictures { get; set; }
         public DbSet<Accomodation> Accomodation { get; set; }
+        public DbSet<AccomodationPictures> AccomodationPictures { get; set; }
         public DbSet<Booking> Booking { get; set; }
+        public DbSet<Pictures> Picture { get; set; }
     }
 }

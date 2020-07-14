@@ -1,4 +1,5 @@
 ﻿using HMS.Areas.Dashboard.ViewModel;
+using HMS.Code;
 using HMS.Entities;
 using HMS.Services;
 using Microsoft.AspNet.Identity;
@@ -69,7 +70,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
         public ActionResult Index(string searchTerm,int page = 1)
         {
-            int recordSize = 10;
+            int recordSize = Variables.NoOfRecordsPerPage;
             RolesListingModel model = new RolesListingModel();
             model.SearchTerm = searchTerm;
             model.Roles = SearchRoles(searchTerm,page, recordSize);

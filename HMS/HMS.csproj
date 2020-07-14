@@ -348,6 +348,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\site\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css.map" />
@@ -446,6 +447,7 @@
     <Content Include="fonts\icomoon\icomoon.woff" />
     <None Include="packages.config" />
     <Content Include="Views\Accomodations\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HMS.DataBase\HMS.DataBase.csproj">

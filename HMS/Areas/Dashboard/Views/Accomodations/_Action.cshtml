@@ -45,6 +45,20 @@
                     <label>Description</label>
                     <input name="Description" class="form-control" placeholder="Description" value="@Model.Description">
                 </div>
+                <div class="form-group">
+                    <label>Pictures</label>
+                    <input id="selectPictures" type="file" class="form-control-file" name="Pictures" multiple>
+                    <input type="hidden" name="pictureIDs" id="pictureIDs" value="" />
+                </div>
+                <div id="pictureArea">
+                    @if (Model.AccomodationPictures != null && Model.AccomodationPictures.Count() > 0)
+                    {
+                        foreach (var accomodationPicture in Model.AccomodationPictures)
+                        {
+                            <img src="/Images/site/@accomodationPicture.Picture.URL" alt="" class="img img-fluid" style="width:200px" onclick="removePicture(this)" data-id="@accomodationPicture.PictureID" />
+                        }
+                    }
+                </div>
 
                 <div class="errorDiv"></div>
             </form>
@@ -58,8 +72,20 @@
         </div>
     </div>
 }
+
+<div id="imageTemplate">
+    <img src="" alt="" class="img img-fluid" style="width:200px" onclick="removePicture(this)" />
+</div>
+
 <script>
     $("#actionButton").click(function(){
+        //get all the ids of pictures which is in picture area
+        var pictureIDs = [];
+        $("#pictureArea img").each(function () {
+            var picIDs = $(this).attr("data-id");
+            pictureIDs.push(picIDs);
+        });
+        $("#pictureIDs").val(pictureIDs.join());
         $.ajax({
             type: 'Post',
             url: '@Url.Action("Action","Accomodations")',
@@ -77,4 +103,31 @@
             })
 
     });
+    $("#selectPictures").change(function () {
+        var pictures = this.files;
+        var formData = new FormData();
+        for (var i = 0; i < pictures.length; i++) {
+            formData.append("Pictures", pictures[i]);
+        }
+        $.ajax({
+            type: 'Post',
+            url: '@Url.Action("UploadPictures", "Dashboard")',
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    var picture = response[i];
+                    var $imgHTML = $("#imageTemplate").clone();
+                    $imgHTML.find("img").attr("src", "/Images/site/" + picture.URL);
+                    $imgHTML.find("img").attr("data-id", picture.ID);
+                    $("#pictureArea").append($imgHTML.html());
+                }
+            })
+
+    });
+    function removePicture(element){
+        element.remove();
+    }
 </script>

@@ -1,4 +1,5 @@
 ﻿using HMS.Areas.Dashboard.ViewModel;
+using HMS.Code;
 using HMS.Entities;
 using HMS.Services;
 using Microsoft.AspNet.Identity;
@@ -71,7 +72,7 @@ namespace HMS.Areas.Dashboard.Controllers
 
         public async Task<ActionResult> Index(string searchTerm, string roleID, int page = 1)
         {
-            int recordSize = 5;
+            int recordSize = Variables.NoOfRecordsPerPage;
             //page = page ?? 1;
             UsersListingModel model = new UsersListingModel();
             model.SearchTerm = searchTerm;
@@ -90,7 +91,7 @@ namespace HMS.Areas.Dashboard.Controllers
             {
                 users = users.Where(x => x.Email.ToLower().Contains(searchTerm.ToLower()));
             }
-            if (!string.IsNullOrEmpty(roleID))
+            if (!string.IsNullOrEmpty(roleID) &&  roleID != "0")
             {
                 var role = await RoleManager.FindByIdAsync(roleID);
                 var userIDs = role.Users.Select(x => x.UserId).ToList();
@@ -110,7 +111,7 @@ namespace HMS.Areas.Dashboard.Controllers
             {
                 users = users.Where(x => x.Email.ToLower().Contains(searchTerm.ToLower()));
             }
-            if (!string.IsNullOrEmpty(roleID))
+            if (!string.IsNullOrEmpty(roleID) && roleID != "0")
             {
                 var role = await RoleManager.FindByIdAsync(roleID);
                 var userIDs = role.Users.Select(x => x.UserId).ToList();

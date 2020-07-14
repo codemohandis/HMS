@@ -1,4 +1,5 @@
 ﻿using HMS.Areas.Dashboard.ViewModel;
+using HMS.Code;
 using HMS.Entities;
 using HMS.Services;
 using System;
@@ -13,9 +14,10 @@ namespace HMS.Areas.Dashboard.Controllers
     {
         AccomodationPackageService accomodationPackageService = new AccomodationPackageService();
         AccomodationTypeService accomodationTypeService = new AccomodationTypeService();
+        DashboardService dashboardService = new DashboardService();
         public ActionResult Index(string searchTerm,int? AccomdationTypeID, int page = 1)
         {
-            int recordSize = 3;
+            int recordSize = Variables.NoOfRecordsPerPage;
             AccomodationPackageListingModel model = new AccomodationPackageListingModel();
             model.SearchTerm = searchTerm;
             model.AccomdationTypeID = AccomdationTypeID;
@@ -44,6 +46,7 @@ namespace HMS.Areas.Dashboard.Controllers
                 model.Name = accomodationPackage.Name;
                 model.NoOfRoom = accomodationPackage.NoOfRoom;
                 model.FeePerNight = accomodationPackage.FeePerNight;
+                model.AccomodationPackagePictures = accomodationPackageService.GetPicturesByAccomodationPackageID(accomodationPackage.ID);
             }
             model.AccomodationTypes = accomodationTypeService.GetAllAccomodationTypes();
             return PartialView("_Action", model);
@@ -54,6 +57,10 @@ namespace HMS.Areas.Dashboard.Controllers
         {
             JsonResult jsonResult = new JsonResult();
             var result = false;
+            //model.pictureIDs  = "90","91","92"
+            //return list={90,91,92} if agar empty ho to empty list return karyga
+            List<int> pictureIDs = !string.IsNullOrEmpty(model.PictureIDs) ? model.PictureIDs.Split(',').Select(x => int.Parse(x)).ToList() : new List<int>();
+            var pictures = dashboardService.GetPictureByIDs(pictureIDs);
 
             if (model.ID > 0)//Edit
             {
@@ -62,7 +69,8 @@ namespace HMS.Areas.Dashboard.Controllers
                 accomodationPackage.Name = model.Name;
                 accomodationPackage.NoOfRoom = model.NoOfRoom;
                 accomodationPackage.FeePerNight = model.FeePerNight;
-
+                accomodationPackage.AccomodationPackagePictures.Clear();
+                accomodationPackage.AccomodationPackagePictures.AddRange(pictures.Select(x => new AccomodationPackagePictures() {AccomodationPackageID=accomodationPackage.ID, PictureID = x.ID }));
                 result = accomodationPackageService.UpdateAccomodationPackage(accomodationPackage);
 
             }
@@ -73,7 +81,8 @@ namespace HMS.Areas.Dashboard.Controllers
                 accomodationPackage.Name = model.Name;
                 accomodationPackage.NoOfRoom = model.NoOfRoom;
                 accomodationPackage.FeePerNight = model.FeePerNight;
-
+                accomodationPackage.AccomodationPackagePictures = new List<AccomodationPackagePictures>();
+                accomodationPackage.AccomodationPackagePictures.AddRange(pictures.Select(x=>new AccomodationPackagePictures() { PictureID = x.ID}));
                 result = accomodationPackageService.SaveAccomodationPackage(accomodationPackage);
             }
 
@@ -87,7 +96,6 @@ namespace HMS.Areas.Dashboard.Controllers
             }
             return jsonResult;
         }
-
         [HttpGet]
         public ActionResult Delete(int ID)
         {

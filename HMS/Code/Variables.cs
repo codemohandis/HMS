@@ -10,5 +10,6 @@ namespace HMS.Code
         public const string HotelFullName = "Sakhir International Resort";
         public const string HotelShortName = "Sakhir";
         public const string HotelNameAbbreviation = "SIR";
+        public const int NoOfRecordsPerPage =10;
     }
 }
