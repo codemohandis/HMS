@@ -13,10 +13,10 @@ namespace HMS.Controllers
         public ActionResult Index()
         {
             HomeViewModel model = new HomeViewModel();
-            AccomodationTypeService AccomodationTypeService = new AccomodationTypeService();
+            AccomodationTypeService accomodationTypeService = new AccomodationTypeService();
             AccomodationPackageService accomodationPackageService = new AccomodationPackageService();
 
-            model.AccommodationTypes = AccomodationTypeService.GetAllAccomodationTypes();
+            model.AccommodationTypes = accomodationTypeService.GetAllAccomodationTypes();
             model.AccomodationPackages = accomodationPackageService.GetAllAccomodationPackages();
 
             return View(model);

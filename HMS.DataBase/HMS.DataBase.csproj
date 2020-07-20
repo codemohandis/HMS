@@ -55,21 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HMSContext.cs" />
-    <Compile Include="Migrations\202006191649039_BasicEntities.cs" />
-    <Compile Include="Migrations\202006191649039_BasicEntities.Designer.cs">
-      <DependentUpon>202006191649039_BasicEntities.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006200844225_identityFrameworkReference.cs" />
-    <Compile Include="Migrations\202006200844225_identityFrameworkReference.Designer.cs">
-      <DependentUpon>202006200844225_identityFrameworkReference.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006292010132_addeddUserProperties.cs" />
-    <Compile Include="Migrations\202006292010132_addeddUserProperties.Designer.cs">
-      <DependentUpon>202006292010132_addeddUserProperties.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007121540522_addPictureEntity.cs" />
-    <Compile Include="Migrations\202007121540522_addPictureEntity.Designer.cs">
-      <DependentUpon>202007121540522_addPictureEntity.cs</DependentUpon>
+    <Compile Include="Migrations\202007201517421_InitializeBasicEntites.cs" />
+    <Compile Include="Migrations\202007201517421_InitializeBasicEntites.Designer.cs">
+      <DependentUpon>202007201517421_InitializeBasicEntites.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,17 +73,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006191649039_BasicEntities.resx">
-      <DependentUpon>202006191649039_BasicEntities.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006200844225_identityFrameworkReference.resx">
-      <DependentUpon>202006200844225_identityFrameworkReference.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006292010132_addeddUserProperties.resx">
-      <DependentUpon>202006292010132_addeddUserProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007121540522_addPictureEntity.resx">
-      <DependentUpon>202007121540522_addPictureEntity.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007201517421_InitializeBasicEntites.resx">
+      <DependentUpon>202007201517421_InitializeBasicEntites.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

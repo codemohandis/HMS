@@ -7,13 +7,13 @@ namespace HMS.DataBase.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class identityFrameworkReference : IMigrationMetadata
+    public sealed partial class InitializeBasicEntites : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(identityFrameworkReference));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitializeBasicEntites));
         
         string IMigrationMetadata.Id
         {
-            get { return "202006200844225_identityFrameworkReference"; }
+            get { return "202007201517421_InitializeBasicEntites"; }
         }
         
         string IMigrationMetadata.Source
